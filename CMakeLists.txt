@@ -6,28 +6,30 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif()
 
-project ("LibACX" LANGUAGES CXX)
-
 # Uncomment the line below to specify Git executable location if necessary
 #set(GIT_EXECUTABLE "C:/Program Files/Git/bin/git.exe") 
 
 
+project ("acx" LANGUAGES CXX)
 # Shortcut to source directory
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
-
 # All executables as a list
 set(SOURCES
   "${SRC_DIR}/source.cpp"
 )
 
 
-add_executable (LibACX ${SOURCES})
-
-set_target_properties(LibACX PROPERTIES LINKER_LANGUAGE CXX)
-
-target_include_directories(LibACX PRIVATE ${CMAKE_SOURCE_DIR})
-target_include_directories(LibACX PRIVATE ${SRC_DIR})
-
+add_library(acx INTERFACE)
+target_include_directories(acx INTERFACE "${SRC_DIR}")
+set_target_properties(acx PROPERTIES LINKER_LANGUAGE CXX)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET LibACX PROPERTY CXX_STANDARD 20)
+  set_property(TARGET acx PROPERTY CXX_STANDARD 20)
+endif()
+
+
+add_executable (acx_exe ${SOURCES})
+set_target_properties(acx_exe PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(acx_exe PRIVATE acx)
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET acx_exe PROPERTY CXX_STANDARD 20)
 endif()

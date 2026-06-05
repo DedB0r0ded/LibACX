@@ -12,7 +12,7 @@ endif()
 
 project ("acx" LANGUAGES CXX)
 # Shortcut to source directory
-set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 # All executables as a list
 set(SOURCES
   "${SRC_DIR}/source.cpp"

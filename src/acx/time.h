@@ -21,6 +21,8 @@ namespace acx {
 
   class Time {
   private:
+    static constexpr u16 FLAG_NULL = 1;
+
     u16 year_;
     u8 month_;
     u8 day_;
@@ -47,6 +49,10 @@ namespace acx {
     // Ctors
 
     Time() noexcept : Time(1970, 1, 1, 0, 0, 0, 0, 0, 0) {}
+
+    static Time null() noexcept {
+      return Time(1970, 1, 1, 0, 0, 0, 0, 0, FLAG_NULL);
+    }
 
 
     // Static fabric instead of public ctors
@@ -93,6 +99,8 @@ namespace acx {
     bool leap_second() const noexcept { return leap_second_ != 0; }
     bool is_dst() const noexcept { return is_dst_ != 0; }
     u16 microseconds() const noexcept { return microseconds_; }
+    bool is_null() const noexcept { return (reserved_ & FLAG_NULL) != 0; }
+    bool has_value() const noexcept { return !is_null(); }
 
 
     // Setters + validation

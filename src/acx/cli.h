@@ -26,7 +26,7 @@ namespace acx {
 	}
 
 	// Utility function prototype
-	Result<int> get_option(std::istream& is) {
+	inline Result<int> get_option(std::istream& is) {
 		string soption;
 		int option = -1;
 		if (!std::getline(is, soption)) {

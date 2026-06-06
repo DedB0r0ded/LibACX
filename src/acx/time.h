@@ -8,8 +8,10 @@
 #include <acx/result.h>
 
 #include <cstdint>
+#include <cstdio>
 #include <cstring>
 #include <string>
+#include <string_view>
 #include <ctime>
 #include <chrono>
 
@@ -450,10 +452,78 @@ namespace acx {
 
     // String values
 
+    static Result<Time> from_string(std::string_view value) {
+      std::string text(value);
+      unsigned year = 0;
+      unsigned month = 0;
+      unsigned day = 0;
+      unsigned hour = 0;
+      unsigned minute = 0;
+      unsigned second = 0;
+      unsigned millisecond = 0;
+      unsigned microsecond = 0;
+      unsigned timezone_hours = 0;
+      unsigned timezone_minutes = 0;
+      char timezone_sign_char = '\0';
+      bool leap_second = false;
+      bool is_dst = false;
+      int parsed = 0;
+      if (std::sscanf(text.c_str(), "%4u-%2u-%2uT%2u:%2u:%2u.%3u%c%2u:%2u%n",
+        &year, &month, &day, &hour, &minute, &second, &millisecond,
+        &timezone_sign_char, &timezone_hours, &timezone_minutes, &parsed) != 10 ||
+        parsed != static_cast<int>(text.size())) {
+        parsed = 0;
+        if (std::sscanf(text.c_str(), "%4u-%2u-%2u %2u:%2u:%2u.%3u.%3u%n",
+          &year, &month, &day, &hour, &minute, &second, &millisecond,
+          &microsecond, &parsed) != 8) {
+          return Err<Time>(ErrorCode::INVALID_ARGUMENT, std::string(ERR_TIME_PARSE));
+        }
+        if (text.compare(parsed, 5, TXT_LEAP_SECOND) == 0) {
+          leap_second = true;
+          parsed += 5;
+        }
+        int timezone_end = 0;
+        if (std::sscanf(text.c_str() + parsed, " (UTC%c%2u:%2u)%n",
+          &timezone_sign_char, &timezone_hours, &timezone_minutes, &timezone_end) != 3) {
+          return Err<Time>(ErrorCode::INVALID_ARGUMENT, std::string(ERR_TIME_PARSE));
+        }
+        parsed += timezone_end;
+        if (text.compare(parsed, text.size() - parsed, TXT_DST) == 0) {
+          is_dst = true;
+          parsed = static_cast<int>(text.size());
+        }
+        if (parsed != static_cast<int>(text.size())) {
+          return Err<Time>(ErrorCode::INVALID_ARGUMENT, std::string(ERR_TIME_PARSE));
+        }
+      }
+      if (timezone_sign_char != '+' && timezone_sign_char != '-') {
+        return Err<Time>(ErrorCode::INVALID_ARGUMENT, std::string(ERR_TIME_PARSE));
+      }
+      if (year > 65535 || month > 255 || day > 255 ||
+        hour > 23 || minute > 59 || second > 59 ||
+        millisecond > 999 || microsecond > 999 ||
+        timezone_hours > 23 || timezone_minutes > 59) {
+        return Err<Time>(ErrorCode::INVALID_ARGUMENT, std::string(ERR_TIME_PARSE));
+      }
+      int timezone_sign = timezone_sign_char == '-' ? -1 : 1;
+      int timezone_offset = timezone_sign * static_cast<int>(timezone_hours * 60 + timezone_minutes);
+      u32 milliseconds_from_midnight =
+        static_cast<u32>(hour * 3600000 + minute * 60000 + second * 1000 + millisecond);
+      return create(
+        static_cast<u16>(year),
+        static_cast<u8>(month),
+        static_cast<u8>(day),
+        milliseconds_from_midnight,
+        static_cast<i16>(timezone_offset),
+        leap_second ? 1 : 0,
+        is_dst ? 1 : 0,
+        static_cast<u16>(microsecond));
+    }
+
     std::string to_string() const {
       char buffer[128];
       std::snprintf(buffer, sizeof(buffer),
-         FMT_TIME_STRING.data(),
+        FMT_TIME_STRING.data(),
         year_, month_, day_, hours(), minutes(), seconds(),
         milliseconds(), microseconds(),
         leap_second() ?  TXT_LEAP_SECOND.data() :  TXT_EMPTY.data(),

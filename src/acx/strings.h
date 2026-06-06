@@ -96,6 +96,7 @@ namespace acx {
 	SCSTR ERR_TIME_TIME_T = "Invalid time_t value";
 	SCSTR ERR_TIME_TO_TIME_T = "Failed to convert to time_t";
 	SCSTR ERR_TIME_BUFFER_NULL = "Buffer pointer is null";
+	SCSTR ERR_TIME_PARSE = "Invalid time string";
 	SCSTR FMT_TIME_STRING = "%04u-%02u-%02u %02u:%02u:%02u.%03u.%03u%s (UTC%+03d:%02u)%s";
 	SCSTR FMT_TIME_ISO8601 = "%04u-%02u-%02uT%02u:%02u:%02u.%03u%+03d:%02u";
 	SCSTR TXT_LEAP_SECOND = "+leap";

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <acx/base.h>
+#include <acx/math.h>
 #include <acx/strings.h>
 #include <acx/result.h>
 #include <acx/time.h>

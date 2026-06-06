@@ -58,5 +58,6 @@ namespace acx {
   using f64 = double;
   //long double is platform-dependent
 
-
+  using id_t = u32;
+  using lid_t = u64;
 }

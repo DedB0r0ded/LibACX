@@ -49,38 +49,41 @@ namespace acx {
 
   // ===== Numeric =====
 
+  /// Signed 8-bit integer.
+  using i8 = std::int8_t;
+
   /// Unsigned 8-bit integer.
-  using u8 = uint8_t;
+  using u8 = std::uint8_t;
 
   /// Signed 16-bit integer.
-  using i16 = int16_t;
+  using i16 = std::int16_t;
 
   /// Unsigned 16-bit integer.
-  using u16 = uint16_t;
+  using u16 = std::uint16_t;
 
   /// Signed 32-bit integer.
-  using i32 = int32_t;
+  using i32 = std::int32_t;
 
   /// Unsigned 32-bit integer.
-  using u32 = uint32_t;
+  using u32 = std::uint32_t;
 
   /// Signed 64-bit integer.
-  using i64 = int64_t;
+  using i64 = std::int64_t;
 
   /// Unsigned 64-bit integer.
-  using u64 = uint64_t;
+  using u64 = std::uint64_t;
 
   /// Unsigned size value.
-  using usize = size_t;
+  using usize = std::size_t;
 
   /// Signed size or pointer-difference value.
-  using isize = ptrdiff_t;
+  using isize = std::ptrdiff_t;
 
   /// Unsigned integer large enough to store a pointer value.
-  using uptr = uintptr_t;
+  using uptr = std::uintptr_t;
 
   /// Signed integer large enough to store a pointer value.
-  using iptr = intptr_t;
+  using iptr = std::intptr_t;
 
   /// Single-precision floating-point value.
   using f32 = float;

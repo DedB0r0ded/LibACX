@@ -45,7 +45,7 @@ namespace acx {
 	}
 
 
-	void print_error(std::ostream& os, Error e) {
+	inline void print_error(std::ostream& os, Error e) {
 		os << MSG_ERROR_PREFIX << static_cast<u16>(e.code()) << TXT_COLON << TXT_SPACE << e.message() << NL;
 	}
 

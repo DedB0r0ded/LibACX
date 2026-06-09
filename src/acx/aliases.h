@@ -100,5 +100,5 @@ namespace acx {
   using lid_t = u64;
 
   /// Menu option id.
-  using menu_opt_t = const id_t;
+  using menu_option_t = i32;
 }

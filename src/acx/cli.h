@@ -26,20 +26,20 @@ namespace acx {
 	}
 
 	// Utility function prototype
-	inline Result<int> get_option(std::istream& is) {
+	inline Result<menu_option_t> get_option(std::istream& is) {
 		string soption;
-		int option = -1;
+		menu_option_t option = -1;
 		if (!std::getline(is, soption)) {
 			return Ok(0);
 		}
 		try {
-			option = std::stoi(trim(soption));
+			option = static_cast<menu_option_t>(std::stoi(trim(soption)));
 		}
 		catch (const std::invalid_argument&) {
-			return Err<int>(ErrorCode::INVALID_ARGUMENT, string(ERR_NOT_NUMBER));
+			return Err<menu_option_t>(ErrorCode::INVALID_ARGUMENT, string(ERR_NOT_NUMBER));
 		}
 		if (option < 0) {
-			return Err<int>(ErrorCode::INVALID_ARGUMENT, string(ERR_MENU_OPT_BELOW_ZERO));
+			return Err<menu_option_t>(ErrorCode::INVALID_ARGUMENT, string(ERR_MENU_OPT_BELOW_ZERO));
 		}
 		return Ok(option);
 	}

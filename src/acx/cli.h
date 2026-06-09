@@ -44,9 +44,13 @@ namespace acx {
 		return Ok(option);
 	}
 
-
 	inline void print_error(std::ostream& os, Error e) {
 		os << MSG_ERROR_PREFIX << static_cast<u16>(e.code()) << TXT_COLON << TXT_SPACE << e.message() << NL;
+	}
+
+	inline void clear_output(std::ostream& os) {
+		os << "\x1B[2J\x1B[H";
+		os.flush();
 	}
 
 

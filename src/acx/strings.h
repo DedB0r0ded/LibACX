@@ -34,7 +34,7 @@ namespace acx {
 	SCSTR MSG_LOADED = "Loaded successfully.";
 	SCSTR MSG_DONE = "Done.";
 	SCSTR MSG_ERROR_PREFIX = "[!] ";
-	SCSTR MSG_INVALID_OPTION = "[!] Invalid option. Please choose among the options listed above.";
+	SCSTR MSG_INVALID_OPTION = "Invalid option. Please choose among the options listed above.";
 
 	SCSTR MSG_MAIN_MENU_FIRST_RUN_INTRO = "You are in the main menu. Choose an option and press ENTER to interact with the program.";
 	SCSTR MSG_MAIN_MENU_INTRO = "Main Menu";

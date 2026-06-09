@@ -11,7 +11,7 @@
 namespace acx{
 
 
-  enum class ErrorCode {
+  enum class ErrorCode : u16 {
     OK = 0,
     INVALID_ARGUMENT,
     OUT_OF_RANGE,

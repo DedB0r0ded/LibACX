@@ -50,6 +50,7 @@ namespace acx {
 	SCSTR TXT_EMPTY = "";
 	SCSTR TXT_SPACE = " ";
 	SCSTR TXT_COMMA = ",";
+	SCSTR TXT_COLON = ":";
 	SCSTR TXT_LEFT_BRACKET = "[";
 	SCSTR TXT_RIGHT_BRACKET_SPACE = "] ";
 	SCSTR TXT_ARROW = " -> ";

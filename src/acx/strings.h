@@ -171,5 +171,15 @@ namespace acx {
 		os << string(width, c) << '\n';
 	}
 
+	inline void print_header(std::ostream& os, const string& title, const usize width) {
+		print_separator(os, '=', width);
+		int padding = (width - static_cast<int>(title.size())) / 2;
+		if (padding > 0) {
+			os << string(padding, ' ');
+		}
+		os << title << '\n';
+		print_separator(os, '=', width);
+	}
+
 
 }
